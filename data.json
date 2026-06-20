@@ -1,0 +1,103 @@
+{
+    "settings": {
+        "start_date": "MTc3NTQyNTIwMDAwMA==",
+        "target_date": "MTc3NjAzMDAwMDAwMA=="
+    },
+    "questions": [
+        {
+            "id": "I",
+            "type": "fallout",
+            "words": [
+                "TERMINAL",
+                "PASSWORD",
+                "SECURITY",
+                "PROTOCOL",
+                "DATABASE",
+                "ENCRYPTD",
+                "FIREWALL",
+                "HARDWARE",
+                "SOFTWARE",
+                "NETWORKS",
+                "MAINFRAM",
+                "BACKBONE",
+                "COMPILER",
+                "SYMLINKS",
+                "OVERRIDE",
+                "ANALYSIS",
+                "REGISTRY",
+                "MALWARES",
+                "INJECTOR",
+                "DEBUGGER",
+                "HACKINGS",
+                "INTRUDER",
+                "BREACHES",
+                "SABOTAGE",
+                "CYLINDER",
+                "SEQUENCE",
+                "RECOVERY",
+                "ISOLATED",
+                "CRITICAL",
+                "WIRELESS",
+                "BANDWIDT",
+                "ROUTINGS",
+                "INTERNET",
+                "EXTERNAL",
+                "INTERNAL",
+                "GATEWAYS",
+                "ENDPOINT",
+                "DOWNLOAD",
+                "UPLOADED",
+                "BROWSERS",
+                "STORAGES",
+                "SERVICES",
+                "VARIABLE",
+                "FUNCTION",
+                "OPERATOR",
+                "RESOURCE",
+                "MODULATE",
+                "TRANSMIT",
+                "RECEIVER",
+                "DUPLICAT",
+                "VALIDATE",
+                "DIRECTRY"
+            ],
+            "a": "UFJPVE9DT0w=",
+            "code": "WA==",
+            "err": "ДОСТЪПЪТ ОТКАЗАН."
+        },
+        {
+            "id": "II",
+            "type": "standard",
+            "q": "VEJB",
+            "a": "VEJB",
+            "code": "VEJB",
+            "err": "ГРЕШЕН ОТГОВОР."
+        },
+        {
+            "id": "III",
+            "type": "standard",
+            "q": "VEJB",
+            "a": "VEJB",
+            "code": "VEJB",
+            "err": "ГРЕШЕН ОТГОВОР."
+        },
+        {
+            "id": "IV",
+            "type": "standard",
+            "q": "VEJB",
+            "a": "VEJB",
+            "code": "VEJB",
+            "err": "ГРЕШЕН ОТГОВОР."
+        },
+        {
+            "id": "V",
+            "type": "standard",
+            "q": "VEJB",
+            "a": "VEJB",
+            "code": "VEJB",
+            "err": "ГРЕШЕН ОТГОВОР."
+        }
+    ],
+    "easterEggs": [],
+    "finalPassword": ""
+}
