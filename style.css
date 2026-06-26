@@ -1,0 +1,1236 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Share+Tech+Mono&display=swap&subset=cyrillic');
+
+:root {
+    --doom-green: #2aff00;
+    --doom-glow: 0 0 4px rgba(42, 255, 0, 0.9), 0 0 8px rgba(42, 255, 0, 0.5);
+    --error-red: #ff003c;
+    --glitch-color: #ff00ea;
+    --bg-dark: #000;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--doom-green);
+    font-family: 'Share Tech Mono', monospace;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+
+/* CRT Ефект със сканиращи линии (ПЛЪТЕН ЕФЕКТ КАТО НА СНИМКАТА) */
+body::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 10;
+    background-size: 100% 2px, 3px 100%;
+    /* 2px прави линиите да режат буквите перфектно */
+    pointer-events: none;
+}
+
+/* Блоков курсор */
+.block-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.1em;
+    background-color: var(--doom-green);
+    animation: blink 1s step-end infinite;
+    vertical-align: bottom;
+    margin-left: 2px;
+    box-shadow: var(--doom-glow);
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* -------------------------------------
+   НАЧАЛНИ ЕКРАНИ
+-------------------------------------- */
+#start-overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    cursor: pointer;
+    transition: opacity 0.5s;
+}
+
+.system-ready-text {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-shadow: var(--doom-glow);
+    animation: pulse-text 2s infinite;
+    /* ПРЕМИГВАНЕ */
+}
+
+.click-engage {
+    font-size: 1.2rem;
+    opacity: 0.7;
+    animation: pulse-text 2s infinite;
+}
+
+#login-screen,
+#terminal-screen {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 150;
+}
+
+.login-container {
+    text-align: left;
+    font-size: 1.5rem;
+    text-shadow: var(--doom-glow);
+    padding: 40px;
+    border: 1px solid rgba(42, 255, 0, 0.3);
+    background: rgba(0, 10, 0, 0.5);
+    min-width: 500px;
+}
+
+.login-header {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-bottom: 30px;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    border-bottom: 1px dashed rgba(42, 255, 0, 0.4);
+    padding-bottom: 15px;
+}
+
+.login-hint {
+    font-size: 0.75rem;
+    opacity: 0.45;
+    margin-bottom: 25px;
+    letter-spacing: 0.05em;
+}
+
+.login-row {
+    margin-bottom: 18px;
+    letter-spacing: 0.1em;
+}
+
+#terminal-screen {
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 40px;
+    font-size: 1.1rem;
+    overflow-y: auto;
+}
+
+.terminal-line {
+    margin-bottom: 8px;
+    text-shadow: var(--doom-glow);
+}
+
+/* -------------------------------------
+   ГЛАВЕН ИНТЕРФЕЙС
+-------------------------------------- */
+#main-ui {
+    text-align: center;
+    z-index: 5;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* -------------------------------------
+   PIP-BOY TOP TABS
+-------------------------------------- */
+#pip-tabs {
+    position: fixed;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 35px;
+    z-index: 6;
+    border-bottom: 1px solid rgba(42, 255, 0, 0.4);
+    padding-bottom: 12px;
+}
+
+.pip-tab {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.15rem;
+    color: rgba(42, 255, 0, 0.4);
+    cursor: pointer;
+    padding: 4px 10px;
+    transition: all 0.25s;
+    position: relative;
+}
+
+.pip-tab:hover {
+    color: rgba(42, 255, 0, 0.8);
+}
+
+.pip-tab.active {
+    color: var(--doom-green);
+    text-shadow: var(--doom-glow);
+}
+
+.pip-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--doom-green);
+    box-shadow: var(--doom-glow);
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* DATA TAB */
+.data-content {
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+}
+
+.data-header {
+    font-size: 1rem;
+    opacity: 0.7;
+    margin-bottom: 20px;
+    letter-spacing: 0.1em;
+    border-bottom: 1px dashed rgba(42, 255, 0, 0.4);
+    padding-bottom: 10px;
+}
+
+#data-codes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.data-code-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(42, 255, 0, 0.3);
+    padding: 10px 18px;
+    background: rgba(0, 20, 0, 0.3);
+    letter-spacing: 0.05em;
+    gap: 15px;
+}
+
+.data-code-row .sector-id {
+    opacity: 0.6;
+}
+
+.data-code-row .code-value {
+    flex: 1;
+    text-align: center;
+}
+
+.remove-code-btn {
+    cursor: pointer;
+    color: var(--error-red);
+    opacity: 0.7;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+.remove-code-btn:hover {
+    opacity: 1;
+    text-shadow: 0 0 6px var(--error-red);
+}
+
+.data-empty {
+    opacity: 0.4;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+/* RADIO TAB */
+.radio-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.radio-layout {
+    display: flex;
+    width: 100%;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.radio-stations {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 260px;
+}
+
+.radio-station {
+    text-align: left;
+    font-size: 1.2rem;
+    padding: 10px 18px;
+    cursor: pointer;
+    opacity: 0.5;
+    letter-spacing: 0.03em;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.radio-station:hover {
+    opacity: 0.8;
+}
+
+.radio-station.active {
+    opacity: 1;
+    background: rgba(42, 255, 0, 0.18);
+    border: 1px solid rgba(42, 255, 0, 0.5);
+    text-shadow: var(--doom-glow);
+}
+
+.radio-station-easter {
+    color: #ff00ea;
+    border-color: transparent;
+}
+
+.radio-station-easter.active {
+    background: rgba(255, 0, 234, 0.18);
+    border: 1px solid rgba(255, 0, 234, 0.5);
+    text-shadow: 0 0 6px var(--glitch-color);
+}
+
+.radio-wave-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+}
+
+.radio-view-mode {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.3rem;
+    opacity: 0.6;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.radio-wave-box {
+    border: 1px solid rgba(42, 255, 0, 0.4);
+    background: rgba(0, 10, 0, 0.3);
+    width: 360px;
+    height: 220px;
+    padding: 6px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+#radio-wave-canvas {
+    width: 100%;
+    flex: 1;
+    display: block;
+}
+
+.radio-placeholder {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.2rem;
+    opacity: 0.5;
+    animation: pulse-text 2s infinite;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: -60px;
+}
+
+/* ЗАГЛАВИЕ КАТО НА СНИМКАТА (OSWALD) */
+#header {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.5rem;
+    text-shadow: 0 0 10px var(--doom-green);
+    margin-bottom: 15px;
+}
+
+/* БРОЯЧ (ПОДРАВНЕНО ДВОЕТОЧИЕ) */
+#timer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    /* Подравнява ги по горния ръб */
+    font-size: 5rem;
+    font-weight: bold;
+    text-shadow: 0 0 15px var(--doom-green);
+    margin-bottom: 30px;
+}
+
+.unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.colon {
+    line-height: 1;
+    margin-top: -4px;
+    /* Лека корекция за перфектен център */
+}
+
+.label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    opacity: 0.6;
+    letter-spacing: 0.2rem;
+    margin-top: 10px;
+    color: #fff;
+    text-shadow: none;
+    font-weight: normal;
+}
+
+/* ЗОНА ЗА КОД */
+#final-zone {
+    border: 1px solid var(--doom-green);
+    padding: 20px 30px;
+    background: rgba(0, 20, 0, 0.4);
+    box-shadow: inset 0 0 15px rgba(42, 255, 0, 0.15);
+    display: inline-block;
+}
+
+.final-label {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+#final-password {
+    background: #000;
+    border: 1px solid var(--doom-green);
+    color: var(--doom-green);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    padding: 10px;
+    text-align: center;
+    width: 200px;
+    text-transform: uppercase;
+    margin-right: 15px;
+    display: inline-block;
+}
+
+#final-btn {
+    background: var(--doom-green);
+    /* ПЛЪТНО ЗЕЛЕН БУТОН */
+    color: #000;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    display: inline-block;
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#final-btn:hover {
+    background: #fff;
+    box-shadow: 0 0 15px #fff;
+}
+
+#tutorial-close-btn,
+#sigil-tutorial-close-btn,
+#invaders-start-btn {
+    background: var(--doom-green);
+    color: #000;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    display: inline-block;
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+#tutorial-close-btn:hover,
+#sigil-tutorial-close-btn:hover,
+#invaders-start-btn:hover {
+    background: #fff;
+    box-shadow: 0 0 15px #fff;
+}
+
+/* Дата и час над навигационните кръгчета */
+#footer-datetime {
+    position: fixed;
+    bottom: 95px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    opacity: 0.7;
+    text-shadow: var(--doom-glow);
+    z-index: 5;
+}
+
+/* Навигационни кръгчета */
+#question-nav {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 5;
+}
+
+.nav-circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--doom-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.8);
+    transition: all 0.3s;
+    box-shadow: 0 0 8px rgba(42, 255, 0, 0.15);
+}
+
+.nav-circle:hover {
+    background: var(--doom-green);
+    color: #000;
+    box-shadow: var(--doom-glow);
+}
+
+/* -------------------------------------
+   МОДАЛНИ ПРОЗОРЦИ
+-------------------------------------- */
+.popup-modal,
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 5, 0, 0.98);
+    border: 2px solid var(--doom-green);
+    padding: 25px 35px;
+    z-index: 200;
+    width: 95%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    flex-direction: column;
+    box-shadow: var(--doom-glow);
+}
+
+#question-modal.sigil-modal-size {
+    max-width: 1400px;
+    max-height: 94vh;
+}
+
+#question-modal.invaders-modal-size {
+    max-width: 760px;
+    width: 98vw;
+    max-height: 98vh;
+    padding: 18px 20px;
+}
+
+#invaders-container .invaders-instructions {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    max-width: 100%;
+}
+
+#invaders-game-area {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+#invaders-canvas {
+    border: 1px solid var(--doom-green);
+    box-shadow: 0 0 16px var(--doom-green);
+    background: #000;
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+}
+
+#answer-input {
+    background: #000;
+    border: 1px solid var(--doom-green);
+    color: var(--doom-green);
+    font-family: inherit;
+    font-size: 1.1rem;
+    padding: 8px;
+    width: 60%;
+    text-align: center;
+    margin: 10px auto;
+    display: block;
+    transition: 0.3s;
+}
+
+#answer-input:disabled {
+    opacity: 0.5;
+    border-color: #555;
+}
+
+#error-msg {
+    color: var(--error-red);
+    font-size: 0.85rem;
+    min-height: 20px;
+    text-align: center;
+    margin-top: 10px;
+    text-shadow: 0 0 5px var(--error-red);
+}
+
+#success-msg {
+    color: var(--doom-green);
+    font-size: 1.3rem;
+    font-weight: bold;
+    min-height: 30px;
+    text-align: center;
+    text-shadow: var(--doom-glow);
+    margin: 15px 0 10px 0;
+}
+
+#close-modal:hover {
+    color: var(--error-red);
+    text-shadow: 0 0 10px var(--error-red);
+}
+
+/* -------------------------------------
+   FALLOUT МАТРИЦА
+-------------------------------------- */
+#fallout-container {
+    text-align: left;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    text-shadow: 0 0 4px rgba(42, 255, 0, 0.5);
+    width: 100%;
+}
+
+.fallout-header {
+    font-size: 1rem;
+    border-bottom: 1px dashed var(--doom-green);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.fallout-main-area {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.fallout-col {
+    flex: 1;
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+}
+
+.fallout-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.hex-code {
+    opacity: 0.7;
+    margin-right: 12px;
+    white-space: nowrap;
+    letter-spacing: 1px;
+}
+
+.fallout-text-block {
+    white-space: pre;
+}
+
+.fallout-word,
+.fallout-symbol,
+.bracket-group {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.fallout-word:hover,
+.fallout-symbol:hover,
+.bracket-group:hover {
+    background: var(--doom-green);
+    color: #000;
+    text-shadow: none;
+}
+
+.disabled,
+.used-bracket {
+    pointer-events: none;
+    opacity: 0.35;
+}
+
+.fallout-log-area {
+    flex: 0.8;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 0.95rem;
+}
+
+#fallout-log {
+    max-height: 260px;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    word-break: break-all;
+}
+
+.util-btn {
+    display: none;
+    margin-top: 12px;
+    width: 100%;
+    font-size: 0.85rem;
+    font-weight: bold;
+    background: #000;
+    border: 1px solid var(--doom-green);
+    color: var(--doom-green);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.util-btn:hover {
+    background: var(--doom-green);
+    color: #000;
+}
+
+/* -------------------------------------
+   SIGIL ПЪЗЕЛ (TALOS PRINCIPLE СТИЛ)
+-------------------------------------- */
+.sigil-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    border-bottom: 1px dashed var(--doom-green);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.sigil-header {
+    font-size: 1rem;
+    text-align: left;
+}
+
+.sigil-help-icon {
+    cursor: pointer;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    border: 1px solid rgba(42, 255, 0, 0.4);
+    padding: 2px 8px;
+    transition: 0.2s;
+    flex-shrink: 0;
+}
+
+.sigil-help-icon:hover {
+    opacity: 1;
+    background: rgba(42, 255, 0, 0.15);
+}
+
+.sigil-main-area {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sigil-board-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1 1 480px;
+    min-width: 380px;
+    max-width: 540px;
+}
+
+.sigil-board-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 520 / 400;
+    border: 1px solid rgba(42, 255, 0, 0.4);
+    background: rgba(0, 10, 0, 0.4);
+    box-sizing: border-box;
+}
+
+.sigil-target-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.sigil-board {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.sigil-board-cell {
+    position: absolute;
+}
+
+.sigil-board-cell.shade-a {
+    background: rgba(42, 255, 0, 0.05);
+}
+
+.sigil-board-cell.shade-b {
+    background: rgba(42, 255, 0, 0.12);
+}
+
+.sigil-piece {
+    position: relative;
+    cursor: grab;
+    touch-action: none;
+    z-index: 2;
+}
+
+.sigil-piece:active {
+    cursor: grabbing;
+}
+
+.sigil-piece-cell {
+    position: absolute;
+    background: rgba(42, 255, 0, 0.3);
+    border: 1px solid var(--doom-green);
+    box-shadow: 0 0 6px rgba(42, 255, 0, 0.4);
+}
+
+.sigil-piece.placed-correct .sigil-piece-cell {
+    background: rgba(42, 255, 0, 0.6);
+    box-shadow: var(--doom-glow);
+}
+
+.sigil-piece.invalid .sigil-piece-cell {
+    background: rgba(255, 0, 60, 0.4);
+    border-color: var(--error-red);
+    box-shadow: 0 0 6px rgba(255, 0, 60, 0.5);
+}
+
+.sigil-piece.selected .sigil-piece-cell {
+    outline: 2px solid #fff;
+}
+
+.sigil-tray-area {
+    flex: 1 1 600px;
+    min-width: 460px;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.sigil-board-buttons-row {
+    display: flex;
+    gap: 10px;
+}
+
+.sigil-board-col .util-btn {
+    margin-top: 0;
+    box-sizing: border-box;
+}
+
+.sigil-board-buttons-row .util-btn {
+    flex: 1;
+    width: auto;
+}
+
+.sigil-tray-label {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+}
+
+.sigil-tray {
+    border: 1px dashed rgba(42, 255, 0, 0.3);
+    height: 560px;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-content: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+/* -------------------------------------
+   АНИМАЦИИ
+-------------------------------------- */
+@keyframes pulse-text {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes glitch-anim {
+    0% {
+        transform: translate(-50%, 2px);
+    }
+
+    50% {
+        transform: translate(-50%, -2px);
+    }
+
+    100% {
+        transform: translate(-50%, 0);
+    }
+}
+
+/* -------------------------------------
+   LOGO SCREEN + MATRIX RAIN
+-------------------------------------- */
+#logo-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#matrix-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+#logo-text {
+    position: relative;
+    z-index: 10;
+    font-family: 'Pip-Boy', 'Share Tech Mono', monospace;
+    font-style: italic;
+    font-size: 8rem;
+    font-weight: 900;
+    color: #2aff00;
+    text-shadow: 0 0 20px #2aff00, 0 0 40px #2aff00, 0 0 80px rgba(42, 255, 0, 0.5);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    font-style: italic;
+    /* Pip-Boy italic style */
+    -webkit-text-stroke: 1px rgba(42, 255, 0, 0.3);
+}
+
+#logo-text.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#logo-screen.fade-out {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+}
+
+/* -------------------------------------
+   PIP-OS BOOT SCREEN
+-------------------------------------- */
+#pip-os-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 250;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 40px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--doom-green);
+    text-shadow: 0 0 6px rgba(42, 255, 0, 1), 0 0 12px rgba(42, 255, 0, 0.6);
+    overflow: hidden;
+    letter-spacing: 0.05em;
+}
+
+#pip-os-header {
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 8px rgba(42, 255, 0, 1), 0 0 20px rgba(42, 255, 0, 0.8), 0 0 40px rgba(42, 255, 0, 0.4);
+    margin-bottom: 0;
+    display: block;
+    white-space: pre;
+}
+
+#pip-os-inner {
+    text-align: left;
+    white-space: pre;
+    line-height: 1.8;
+    transform: translateY(0);
+    transition: transform 0.9s cubic-bezier(0.3, 0, 0.7, 0.5),
+        opacity 0.6s ease-in;
+    opacity: 1;
+    width: 700px;
+    max-width: 90vw;
+}
+
+#pip-os-inner.slide-up {
+    transform: translateY(-115vh);
+    opacity: 0;
+}
+
+#pip-os-text {
+    display: inline;
+}
+
+/* -------------------------------------
+   VAULT BOY SCREEN
+-------------------------------------- */
+#vaultboy-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 260;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+#vaultboy-img {
+    width: 320px;
+    height: 380px;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 0 12px rgba(42, 255, 0, 0.4)) contrast(1.1);
+    isolation: isolate;
+}
+
+#initiating-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    color: var(--doom-green);
+    text-shadow: var(--doom-glow);
+    letter-spacing: 0.25rem;
+    animation: blink-init 0.6s step-end infinite;
+}
+
+@keyframes blink-init {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Screen shake — strong vertical + horizontal like Pip-Boy open */
+@keyframes screen-shake {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    8% {
+        transform: translate(-4px, -18px);
+    }
+
+    16% {
+        transform: translate(4px, 14px);
+    }
+
+    24% {
+        transform: translate(-6px, -10px);
+    }
+
+    32% {
+        transform: translate(5px, 8px);
+    }
+
+    40% {
+        transform: translate(-3px, -6px);
+    }
+
+    50% {
+        transform: translate(3px, 5px);
+    }
+
+    60% {
+        transform: translate(-2px, -4px);
+    }
+
+    72% {
+        transform: translate(2px, 3px);
+    }
+
+    84% {
+        transform: translate(-1px, -2px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+body.shake {
+    animation: screen-shake 0.9s ease-out forwards;
+}
+
+.invaders-restart-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.inv-restart-btn {
+    background: transparent;
+    border: 1px solid var(--doom-green);
+    color: var(--doom-green);
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 8px 18px;
+    cursor: pointer;
+    text-shadow: var(--doom-glow);
+    box-shadow: 0 0 6px var(--doom-green);
+    letter-spacing: 0.05em;
+    transition: 0.2s;
+}
+
+.inv-restart-btn:hover {
+    background: var(--doom-green);
+    color: #000;
+}
+
+.inv-restart-btn.inv-restart-hard {
+    border-color: #ffee44;
+    color: #ffee44;
+    box-shadow: 0 0 6px #ffee44;
+    text-shadow: 0 0 6px #ffee44;
+}
+
+.inv-restart-btn.inv-restart-hard:hover {
+    background: #ffee44;
+    color: #000;
+}
+
+.inv-restart-btn.inv-restart-boss {
+    border-color: #ff4444;
+    color: #ff4444;
+    box-shadow: 0 0 6px #ff4444;
+    text-shadow: 0 0 6px #ff4444;
+}
+
+.inv-restart-btn.inv-restart-boss:hover {
+    background: #ff4444;
+    color: #000;
+}
+
+/* ===================== INVADERS MOBILE CONTROLS ===================== */
+.invaders-mobile-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 6px;
+}
+
+.inv-mobile-btn {
+    background: transparent;
+    border: 1px solid var(--doom-green);
+    color: var(--doom-green);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.1rem;
+    padding: 10px 22px;
+    cursor: pointer;
+    text-shadow: var(--doom-glow);
+    box-shadow: 0 0 6px var(--doom-green);
+    letter-spacing: 0.05em;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.inv-mobile-btn.inv-fire {
+    padding: 10px 28px;
+    background: rgba(0, 255, 65, 0.08);
+}
+
+.inv-mobile-btn:active {
+    background: var(--doom-green);
+    color: #000;
+}
