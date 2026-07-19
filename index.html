@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0x536368726F64316E676572735F43617421</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- LOGO SCREEN -->
+    <div id="logo-screen">
+        <canvas id="matrix-canvas"></canvas>
+        <div id="logo-text">ПРАВЕЦ</div>
+    </div>
+
+    <!-- PIP-OS BOOT SCREEN -->
+    <div id="pip-os-screen" style="display:none;">
+        <div id="pip-os-inner">
+            <span id="pip-os-header"></span>
+            <div id="pip-os-text"></div>
+            <span id="pip-os-cursor" class="block-cursor" style="display:none;"></span>
+        </div>
+    </div>
+
+    <!-- VAULT BOY SCREEN -->
+    <div id="vaultboy-screen" style="display:none;">
+        <img id="vaultboy-img" src="" alt="Vault Boy">
+        <div id="initiating-text">INITIATING...</div>
+    </div>
+
+    <div id="start-overlay" style="display: none;">
+        <div class="system-ready-text">SYSTEM READY // WAITING FOR INPUT</div>
+        <div class="click-engage">[ CLICK ANYWHERE TO ENGAGE ]</div>
+    </div>
+
+    <div id="login-screen" style="display: none;">
+        <div class="login-container">
+            <div class="login-header">ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM<br>COPYRIGHT 2075-2077 ROBCO INDUSTRIES
+            </div>
+            <div class="login-row">
+                <span>USERNAME: </span><span id="auto-username"></span><span class="block-cursor"
+                    id="user-cursor"></span>
+            </div>
+            <div class="login-row" id="password-row">
+                <span>PASSWORD: </span><span id="pass-display"></span><span class="block-cursor" id="pass-cursor"
+                    style="display:none;"></span>
+            </div>
+            <div id="login-error-msg"
+                style="display:none; color: var(--error-red); margin-top: 15px; text-shadow: 0 0 5px var(--error-red);">
+                ACCESS DENIED. TRY AGAIN.</div>
+            <input type="text" id="manual-password-input" autocomplete="off" autocorrect="off" autocapitalize="off"
+                spellcheck="false" data-lpignore="true" data-1p-ignore data-bwignore
+                style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;">
+        </div>
+    </div>
+
+    <div id="terminal-screen" style="display: none;"></div>
+
+    <div id="main-ui" style="display: none;">
+        <span id="credits-teaser" class="credits-teaser" title="?">? :)</span>
+        <div id="pip-tabs">
+            <div class="pip-tab active" data-tab="stat">STAT</div>
+            <div class="pip-tab" data-tab="data">DATA</div>
+            <div class="pip-tab" data-tab="radio">RADIO</div>
+
+        </div>
+
+        <div class="tab-panel active" id="tab-stat">
+            <div class="main-content">
+                <h1 id="header">PLACEHOLDER: КОДОВ СЕГМЕНТ</h1>
+
+                <div id="timer">
+                    <div class="unit"><span id="days">00</span><span class="label">DAYS</span></div> <span
+                        class="colon">:</span>
+                    <div class="unit"><span id="hours">00</span><span class="label">HRS</span></div> <span
+                        class="colon">:</span>
+                    <div class="unit"><span id="minutes">00</span><span class="label">MIN</span></div> <span
+                        class="colon">:</span>
+                    <div class="unit"><span id="seconds">00</span><span class="label">SEC</span></div>
+                </div>
+
+                <div id="final-zone">
+                    <div class="final-label">> Въведи 4-символен код за достъп</div>
+                    <input type="text" id="final-password" placeholder="КОД" autocomplete="off">
+                    <button id="final-btn">[ ИНИЦИИРАЙ ]</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="tab-data">
+            <div class="data-content">
+                <div class="data-header">> ОТКЛЮЧЕНИ КОДОВЕ</div>
+                <div id="data-codes-list"></div>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="tab-radio">
+            <div class="radio-content">
+                <div class="radio-layout">
+                    <div class="radio-stations" id="radio-stations">
+                        <div class="radio-station active" data-station="classical">Classical Radio</div>
+                        <div class="radio-station" data-station="galaxy">Galaxy station</div>
+                        <div class="radio-station" data-station="mojave">Mojave station</div>
+                        <div class="radio-station" data-station="newvegas">Radio New Vegas</div>
+                        <div class="radio-station" data-station="pra">People's Republic of America</div>
+                        <div class="radio-station" data-station="diamondcity">Diamond City Radio</div>
+                        <div class="radio-station radio-station-easter" id="shrimp-station" data-station="shrimp"
+                            style="display:none;">Shrimp Station</div>
+                        <div class="radio-station radio-station-easter" id="wernher-station" data-station="wernher"
+                            style="display:none;">Wernher's Distress Signal</div>
+                        <div class="radio-station radio-station-easter" id="outcast-station" data-station="outcast"
+                            style="display:none;">Outcast Distress Signal</div>
+                    </div>
+                    <div class="radio-wave-wrapper">
+                        <div class="radio-view-mode">FM</div>
+                        <div class="radio-wave-box">
+                            <canvas id="radio-wave-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="footer-datetime"></div>
+        <div id="question-nav"></div>
+    </div>
+
+    <div id="credits-modal" class="modal">
+        <div class="modal-content">
+            <div
+                style="position: relative; border-bottom: 1px solid var(--doom-green); padding-bottom: 10px; margin-bottom: 15px; text-align: center;">
+                <h3 style="margin: 0; text-shadow: var(--doom-glow);">?</h3>
+                <span id="close-credits-modal" style="cursor: pointer; position: absolute; right: 0; top: 0;">[ X
+                    ]</span>
+            </div>
+            <div class="modal-body" style="padding: 50px 20px; text-align: center;">
+                <div class="radio-placeholder">ОЧАКВАЙТЕ СКОРО</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="question-modal" class="modal">
+        <div class="modal-content">
+
+            <div
+                style="position: relative; border-bottom: 1px solid var(--doom-green); padding-bottom: 10px; margin-bottom: 15px; text-align: center;">
+                <span id="invaders-help-btn" class="modal-help-topleft" style="display:none;">[ ? ] ИНСТРУКЦИИ</span>
+                <h3 id="modal-title" style="margin: 0; text-shadow: var(--doom-glow);">СЕКТОР</h3>
+                <span id="close-modal" style="cursor: pointer; position: absolute; right: 0; top: 0;">[ X ]</span>
+            </div>
+
+            <div class="modal-body">
+                <p id="question-text" style="display: none; font-size: 1.2rem;"></p>
+                <input type="text" id="answer-input" placeholder="ВЪВЕДИ ОТГОВОР" autocomplete="off"
+                    style="display: none; margin: 0 auto;">
+                <button id="submit-answer" style="display: none; margin: 10px auto;">ПОТВЪРДИ</button>
+
+                <div id="coming-soon-container" style="display: none; padding: 50px 20px; text-align: center;">
+                    <div class="radio-placeholder">ОЧАКВАЙТЕ СКОРО</div>
+                </div>
+
+                <div id="invaders-container" style="display: none;">
+                    <div id="invaders-mode-panel" class="invaders-instructions"
+                        style="display:none; flex-direction: column; align-items: center; justify-content: center; min-height: 560px; text-align: center;">
+                        <h3
+                            style="color: var(--doom-green); text-shadow: var(--doom-glow); margin: 0 0 22px; font-size: 1.3rem;">
+                            ИЗБЕРИ РЕЖИМ</h3>
+                        <div class="invaders-restart-row">
+                            <button id="mode-normal-btn" class="inv-restart-btn">[ НОРМАЛЕН ]</button>
+                            <button id="mode-hard-btn" class="inv-restart-btn inv-restart-hard">[ ТРУДЕН ]</button>
+                            <button id="mode-boss-btn" class="inv-restart-btn inv-restart-boss" title="Шефчето"
+                                disabled>
+                                <svg id="mode-boss-btn-face" class="inv-boss-btn-icon" viewBox="0 0 40 36"
+                                    style="display:none;">
+                                    <g fill="#ff8800">
+                                        <rect x="8.89" y="4.00" width="5.04" height="4.89" />
+                                        <rect x="31.11" y="4.00" width="5.04" height="4.89" />
+                                        <rect x="13.33" y="8.29" width="5.04" height="4.89" />
+                                        <rect x="22.22" y="8.29" width="5.04" height="4.89" />
+                                        <rect x="4.44" y="12.57" width="5.04" height="4.89" />
+                                        <rect x="8.89" y="12.57" width="5.04" height="4.89" />
+                                        <rect x="13.33" y="12.57" width="5.04" height="4.89" />
+                                        <rect x="17.78" y="12.57" width="5.04" height="4.89" />
+                                        <rect x="22.22" y="12.57" width="5.04" height="4.89" />
+                                        <rect x="26.67" y="12.57" width="5.04" height="4.89" />
+                                        <rect x="31.11" y="12.57" width="5.04" height="4.89" />
+                                        <rect x="0.00" y="16.86" width="5.04" height="4.89" />
+                                        <rect x="4.44" y="16.86" width="5.04" height="4.89" />
+                                        <rect x="13.33" y="16.86" width="5.04" height="4.89" />
+                                        <rect x="17.78" y="16.86" width="5.04" height="4.89" />
+                                        <rect x="22.22" y="16.86" width="5.04" height="4.89" />
+                                        <rect x="31.11" y="16.86" width="5.04" height="4.89" />
+                                        <rect x="35.56" y="16.86" width="5.04" height="4.89" />
+                                        <rect x="0.00" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="4.44" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="8.89" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="13.33" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="17.78" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="22.22" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="26.67" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="31.11" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="35.56" y="21.14" width="5.04" height="4.89" />
+                                        <rect x="4.44" y="25.43" width="5.04" height="4.89" />
+                                        <rect x="13.33" y="25.43" width="5.04" height="4.89" />
+                                        <rect x="22.22" y="25.43" width="5.04" height="4.89" />
+                                        <rect x="31.11" y="25.43" width="5.04" height="4.89" />
+                                        <rect x="0.00" y="29.71" width="5.04" height="4.89" />
+                                        <rect x="8.89" y="29.71" width="5.04" height="4.89" />
+                                        <rect x="26.67" y="29.71" width="5.04" height="4.89" />
+                                        <rect x="35.56" y="29.71" width="5.04" height="4.89" />
+                                    </g>
+                                    <rect x="9.5" y="13" width="6" height="6" fill="#fff" />
+                                    <rect x="24.5" y="13" width="6" height="6" fill="#fff" />
+                                    <rect x="11" y="14.5" width="3" height="3" fill="#000" />
+                                    <rect x="26" y="14.5" width="3" height="3" fill="#000" />
+                                </svg>
+                                <svg id="mode-boss-btn-lock" class="inv-boss-btn-icon" viewBox="0 0 40 40">
+                                    <rect x="14" y="18" width="12" height="10" rx="1.5" fill="none" stroke="#39FF14"
+                                        stroke-width="1.8" />
+                                    <path d="M16.5 18 V14 a3.5 3.5 0 0 1 7 0 V18" fill="none" stroke="#39FF14"
+                                        stroke-width="1.8" />
+                                    <circle cx="20" cy="22.5" r="1.5" fill="#39FF14" />
+                                </svg>
+                            </button>
+                            <button id="mode-code-key-btn" class="inv-restart-btn inv-code-key-btn"
+                                title="Въведи код за достъп" style="display:none;">
+                                <svg class="inv-boss-btn-icon inv-key-icon" viewBox="0 0 40 40">
+                                    <circle cx="13" cy="13" r="7" fill="none" stroke="#ffee44" stroke-width="2.6" />
+                                    <circle cx="13" cy="13" r="2.4" fill="#ffee44" />
+                                    <path d="M18.5 18.5 L32 32" fill="none" stroke="#ffee44" stroke-width="2.6"
+                                        stroke-linecap="round" />
+                                    <path d="M25 25 L29.5 20.5 M28.5 28.5 L33 24" fill="none" stroke="#ffee44"
+                                        stroke-width="2.6" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="invaders-game-area"
+                        style="display:none; flex-direction:column; align-items:center; gap:8px;">
+                        <div id="invaders-canvas-wrap">
+                            <canvas id="invaders-canvas" width="620" height="510"></canvas>
+                            <div id="invaders-restart-btns" class="invaders-restart-btns" style="display:none;">
+                                <div class="invaders-restart-row">
+                                    <button id="inv-restart-normal" class="inv-restart-btn">[ НОРМАЛЕН ]</button>
+                                    <button id="inv-restart-hard" class="inv-restart-btn inv-restart-hard">[ ТРУДЕН
+                                        ]</button>
+                                    <button id="inv-restart-boss" class="inv-restart-btn inv-restart-boss"
+                                        title="Шефчето" disabled>
+                                        <svg id="inv-boss-btn-face" class="inv-boss-btn-icon" viewBox="0 0 40 36"
+                                            style="display:none;">
+                                            <g fill="#ff8800">
+                                                <rect x="8.89" y="4.00" width="5.04" height="4.89" />
+                                                <rect x="31.11" y="4.00" width="5.04" height="4.89" />
+                                                <rect x="13.33" y="8.29" width="5.04" height="4.89" />
+                                                <rect x="22.22" y="8.29" width="5.04" height="4.89" />
+                                                <rect x="4.44" y="12.57" width="5.04" height="4.89" />
+                                                <rect x="8.89" y="12.57" width="5.04" height="4.89" />
+                                                <rect x="13.33" y="12.57" width="5.04" height="4.89" />
+                                                <rect x="17.78" y="12.57" width="5.04" height="4.89" />
+                                                <rect x="22.22" y="12.57" width="5.04" height="4.89" />
+                                                <rect x="26.67" y="12.57" width="5.04" height="4.89" />
+                                                <rect x="31.11" y="12.57" width="5.04" height="4.89" />
+                                                <rect x="0.00" y="16.86" width="5.04" height="4.89" />
+                                                <rect x="4.44" y="16.86" width="5.04" height="4.89" />
+                                                <rect x="13.33" y="16.86" width="5.04" height="4.89" />
+                                                <rect x="17.78" y="16.86" width="5.04" height="4.89" />
+                                                <rect x="22.22" y="16.86" width="5.04" height="4.89" />
+                                                <rect x="31.11" y="16.86" width="5.04" height="4.89" />
+                                                <rect x="35.56" y="16.86" width="5.04" height="4.89" />
+                                                <rect x="0.00" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="4.44" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="8.89" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="13.33" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="17.78" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="22.22" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="26.67" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="31.11" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="35.56" y="21.14" width="5.04" height="4.89" />
+                                                <rect x="4.44" y="25.43" width="5.04" height="4.89" />
+                                                <rect x="13.33" y="25.43" width="5.04" height="4.89" />
+                                                <rect x="22.22" y="25.43" width="5.04" height="4.89" />
+                                                <rect x="31.11" y="25.43" width="5.04" height="4.89" />
+                                                <rect x="0.00" y="29.71" width="5.04" height="4.89" />
+                                                <rect x="8.89" y="29.71" width="5.04" height="4.89" />
+                                                <rect x="26.67" y="29.71" width="5.04" height="4.89" />
+                                                <rect x="35.56" y="29.71" width="5.04" height="4.89" />
+                                            </g>
+                                            <rect x="9.5" y="13" width="6" height="6" fill="#fff" />
+                                            <rect x="24.5" y="13" width="6" height="6" fill="#fff" />
+                                            <rect x="11" y="14.5" width="3" height="3" fill="#000" />
+                                            <rect x="26" y="14.5" width="3" height="3" fill="#000" />
+                                        </svg>
+                                        <svg id="inv-boss-btn-lock" class="inv-boss-btn-icon" viewBox="0 0 40 40">
+                                            <rect x="14" y="18" width="12" height="10" rx="1.5" fill="none"
+                                                stroke="#39FF14" stroke-width="1.8" />
+                                            <path d="M16.5 18 V14 a3.5 3.5 0 0 1 7 0 V18" fill="none" stroke="#39FF14"
+                                                stroke-width="1.8" />
+                                            <circle cx="20" cy="22.5" r="1.5" fill="#39FF14" />
+                                        </svg>
+                                    </button>
+                                    <button id="inv-code-key-btn" class="inv-restart-btn inv-code-key-btn"
+                                        title="Въведи код за достъп" style="display:none;">
+                                        <svg class="inv-boss-btn-icon inv-key-icon" viewBox="0 0 40 40">
+                                            <circle cx="13" cy="13" r="7" fill="none" stroke="#ffee44"
+                                                stroke-width="2.6" />
+                                            <circle cx="13" cy="13" r="2.4" fill="#ffee44" />
+                                            <path d="M18.5 18.5 L32 32" fill="none" stroke="#ffee44" stroke-width="2.6"
+                                                stroke-linecap="round" />
+                                            <path d="M25 25 L29.5 20.5 M28.5 28.5 L33 24" fill="none" stroke="#ffee44"
+                                                stroke-width="2.6" stroke-linecap="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="inv-code-entry" class="inv-code-entry" style="display:none;">
+                                <span id="inv-code-close" class="inv-code-close">[ X ]</span>
+                                <div class="inv-code-title">ВЪВЕДИ ПАРОЛА ЗА ДОСТЪП</div>
+
+                                <div class="inv-code-kb-row">
+                                    <div class="inv-code-kb-wrap">
+                                        <div id="inv-typed-display" class="inv-typed-display"></div>
+                                        <div class="inv-keyboard">
+                                            <div class="inv-kb-row">
+                                                <button class="inv-kb-key" data-letter="Q">Q</button>
+                                                <button class="inv-kb-key" data-letter="W">W</button>
+                                                <button class="inv-kb-key" data-letter="E">E</button>
+                                                <button class="inv-kb-key" data-letter="R">R</button>
+                                                <button class="inv-kb-key" data-letter="T">T</button>
+                                                <button class="inv-kb-key" data-letter="Y">Y</button>
+                                                <button class="inv-kb-key" data-letter="U">U</button>
+                                                <button class="inv-kb-key" data-letter="I">I</button>
+                                                <button class="inv-kb-key" data-letter="O">O</button>
+                                                <button class="inv-kb-key" data-letter="P">P</button>
+                                            </div>
+                                            <div class="inv-kb-row">
+                                                <button class="inv-kb-key" data-letter="A">A</button>
+                                                <button class="inv-kb-key" data-letter="S">S</button>
+                                                <button class="inv-kb-key" data-letter="D">D</button>
+                                                <button class="inv-kb-key" data-letter="F">F</button>
+                                                <button class="inv-kb-key" data-letter="G">G</button>
+                                                <button class="inv-kb-key" data-letter="H">H</button>
+                                                <button class="inv-kb-key" data-letter="J">J</button>
+                                                <button class="inv-kb-key" data-letter="K">K</button>
+                                                <button class="inv-kb-key" data-letter="L">L</button>
+                                            </div>
+                                            <div class="inv-kb-row">
+                                                <button class="inv-kb-key inv-kb-wide" data-action="del">◄ DEL</button>
+                                                <button class="inv-kb-key" data-letter="Z">Z</button>
+                                                <button class="inv-kb-key" data-letter="X">X</button>
+                                                <button class="inv-kb-key" data-letter="C">C</button>
+                                                <button class="inv-kb-key" data-letter="V">V</button>
+                                                <button class="inv-kb-key" data-letter="B">B</button>
+                                                <button class="inv-kb-key" data-letter="N">N</button>
+                                                <button class="inv-kb-key" data-letter="M">M</button>
+                                                <button class="inv-kb-key inv-kb-wide inv-kb-enter"
+                                                    data-action="enter">ENTER</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="inv-code-side">
+                                        <div class="inv-dpad">
+                                            <button class="inv-kb-key inv-kb-arrow inv-dpad-up"
+                                                data-action="up">▲</button>
+                                            <button class="inv-kb-key inv-kb-arrow inv-dpad-left"
+                                                data-action="left">◄</button>
+                                            <button class="inv-kb-key inv-kb-arrow inv-dpad-down"
+                                                data-action="down">▼</button>
+                                            <button class="inv-kb-key inv-kb-arrow inv-dpad-right"
+                                                data-action="right">►</button>
+                                        </div>
+                                        <button id="inv-hack-btn" class="inv-hack-btn" title="Опит за хакване">
+                                            <svg viewBox="0 0 40 40">
+                                                <path d="M14 12 L6 20 L14 28" fill="none" stroke="#ff8800"
+                                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M26 12 L34 20 L26 28" fill="none" stroke="#ff8800"
+                                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M22.5 8 L17.5 32" stroke="#ff8800" stroke-width="2.5"
+                                                    stroke-linecap="round" />
+                                            </svg>
+                                            ХАК
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="inv-hack-overlay" class="inv-hack-overlay">
+                                    <div class="fallout-header inv-hack-header">
+                                        <div
+                                            style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                            <div>ROBCO INDUSTRIES (TM) TERMLINK<br>PASSWORD REQUIRED</div>
+                                            <span id="inv-hack-close" class="inv-code-close" style="position:static;">[
+                                                X ]</span>
+                                        </div>
+                                        <div style="margin-top: 10px;">ОПИТИ ОСТАВАЩИ: <span
+                                                id="inv-hack-attempts-blocks">■ ■ ■ ■</span></div>
+                                    </div>
+                                    <div class="inv-hack-main-area">
+                                        <div id="inv-hack-grid" class="inv-hack-grid"></div>
+                                        <div class="inv-hack-log-area">
+                                            <div id="inv-hack-log"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="inv-code-msg" class="inv-code-msg"></div>
+                            </div>
+                        </div>
+
+                        <div id="invaders-mobile-controls" class="invaders-mobile-controls">
+                            <button id="modal-mute-btn" class="inv-mobile-btn inv-mobile-icon-btn"
+                                title="Музика вкл/изкл">
+                                <svg id="modal-mute-icon" viewBox="0 0 24 24">
+                                    <path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor" />
+                                    <path id="modal-mute-waves" d="M15.5 8.5c1.3 1 2.1 2.2 2.1 3.5s-.8 2.5-2.1 3.5"
+                                        fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                                    <path id="modal-mute-x" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none"
+                                        stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+                                        style="display:none;" />
+                                </svg>
+                            </button>
+                            <button id="inv-left-btn" class="inv-mobile-btn">◀</button>
+                            <button id="inv-fire-btn" class="inv-mobile-btn inv-fire">▲ FIRE</button>
+                            <button id="inv-right-btn" class="inv-mobile-btn">▶</button>
+                            <button id="modal-back-btn" class="inv-mobile-btn inv-mobile-icon-btn"
+                                title="Назад в менюто">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor"
+                                        stroke-width="2.2" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="fallout-container" style="display: none;">
+                    <div class="fallout-header">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>WELCOME TO ROBCO INDUSTRIES (TM) TERMLINK<br>PASSWORD REQUIRED</div>
+                            <span id="fallout-help-btn" class="sigil-help-icon" title="Инструкции"
+                                style="margin-left:15px;">[ ? ]</span>
+                        </div>
+                        <div style="margin-top: 15px;">ATTEMPTS REMAINING: <span id="fallout-attempts-blocks">■ ■ ■
+                                ■</span></div>
+                    </div>
+
+                    <div class="fallout-main-area">
+                        <div id="fallout-grid-left" class="fallout-col"></div>
+                        <div id="fallout-grid-right" class="fallout-col"></div>
+                        <div class="fallout-log-area">
+                            <div id="fallout-log"></div>
+                            <button id="lower-diff-btn" class="util-btn">[ ПОКАЖИ ИНСТРУКЦИИ ]</button>
+                            <button id="restart-fallout-btn" class="util-btn"
+                                style="color: #000; background: var(--doom-green);">[ РЕСТАРТ НА СИСТЕМАТА ]</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sigil-container" style="display: none;">
+                    <div class="sigil-main-area">
+                        <div class="sigil-board-col">
+                            <div class="sigil-header-row">
+                                <div class="sigil-header">> ПОДРЕДИ ФРАГМЕНТИТЕ, ЗА ДА ВЪЗСТАНОВИШ ПЕЧАТА</div>
+                                <span id="sigil-help-btn" class="sigil-help-icon" title="Инструкции">[ ? ]</span>
+                            </div>
+                            <div class="sigil-board-wrap">
+                                <svg id="sigil-target-svg" class="sigil-target-svg"></svg>
+                                <div id="sigil-board" class="sigil-board"></div>
+                            </div>
+                            <div class="sigil-board-buttons-row">
+                                <button id="sigil-rotate-btn" class="util-btn" style="display:block;">[ ЗАВЪРТИ
+                                    ]</button>
+                                <button id="sigil-reset-positions-btn" class="util-btn" style="display:block;">[ ВЪРНИ
+                                    ВСИЧКИ ]</button>
+                            </div>
+                            <button id="sigil-restart-btn" class="util-btn"
+                                style="display:block; color:#000; background: var(--doom-green);">[ РЕСТАРТ ]</button>
+                            <div id="error-msg"></div>
+                            <div id="success-msg"></div>
+                        </div>
+                        <div class="sigil-tray-area">
+                            <div class="sigil-tray-label">> ФРАГМЕНТИ</div>
+                            <div id="sigil-tray" class="sigil-tray"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="tutorial-modal" class="modal"
+        style="z-index: 400; width: 90%; max-width: 650px; box-sizing: border-box; left: 50%; right: auto; margin: 0; transform: translate(-50%, -50%);">
+        <div class="modal-content"
+            style="max-width: 100%; width: 100%; box-sizing: border-box; text-align: left; font-size: 1.1rem; line-height: 1.5; padding: 0;">
+            <h3
+                style="color: var(--doom-green); text-shadow: var(--doom-glow); border-bottom: 1px dashed var(--doom-green); padding-bottom: 10px; text-align: center;">
+                > ИНСТРУКЦИИ ЗА ХАКВАНЕ</h3>
+            <p style="margin-top: 15px;">> Целта е да откриете правилната парола.</p>
+            <p>> <strong>LIKENESS (Сходство)</strong> показва колко букви от вашия опит се намират на точната си позиция
+                във вярната парола.</p>
+            <p>> <strong>ТРИК СЪС СКОБИТЕ:</strong> Системата има скрити команди! Търсете съвпадащи скоби на един и същ
+                ред: <code>(...)</code>, <code>[...]</code>, <code>{...}</code>, <code>&lt;...&gt;</code>. </p>
+            <p>> Натискането върху такава група премахва грешна дума (Dud Removed) или възстановява опитите ви
+                (Allowance Replenished).</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="tutorial-close-btn"
+                    onclick="document.getElementById('tutorial-modal').style.display='none'">[ РАЗБРАХ ]</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sigil-tutorial-modal" class="modal"
+        style="z-index: 400; width: 90%; max-width: 650px; box-sizing: border-box; left: 50%; right: auto; margin: 0; transform: translate(-50%, -50%);">
+        <div class="modal-content"
+            style="max-width: 100%; width: 100%; box-sizing: border-box; text-align: left; font-size: 1.1rem; line-height: 1.5; padding: 0;">
+            <h3
+                style="color: var(--doom-green); text-shadow: var(--doom-glow); border-bottom: 1px dashed var(--doom-green); padding-bottom: 10px; text-align: center;">
+                > ИНСТРУКЦИИ ЗА ПЕЧАТА</h3>
+            <p style="margin-top: 15px;">> Целта е да запълниш ЦЯЛАТА рамка с фрагментите от тавата вдясно, без празни
+                места и без застъпване.</p>
+            <p>> <strong>ПОЗИЦИОНИРАНЕ:</strong> Хвани фрагмент с мишката (или пръст) и го издърпай върху рамката.</p>
+            <p>> <strong>ЗАВЪРТАНЕ:</strong> Кликни върху фрагмент, за да го избереш (ще светне в бяло), после натисни
+                бутона <code>[ ЗАВЪРТИ ]</code>, за да го завъртиш на 90°.</p>
+            <p>> Когато всички фрагменти влязат на мястото си без застъпване, печатът ще се възстанови автоматично.</p>
+            <p>> Ако се объркаш, бутонът <code>[ РЕСТАРТ ]</code> презарежда сектора с нова комбинация.</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="sigil-tutorial-close-btn"
+                    onclick="document.getElementById('sigil-tutorial-modal').style.display='none'">[ РАЗБРАХ ]</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="invaders-tutorial-modal" class="modal"
+        style="z-index: 400; width: 90%; max-width: 650px; box-sizing: border-box; left: 50%; right: auto; margin: 0; transform: translate(-50%, -50%);">
+        <div class="modal-content"
+            style="max-width: 100%; width: 100%; box-sizing: border-box; text-align: left; font-size: 1.1rem; line-height: 1.5; padding: 0;">
+            <span id="invaders-tutorial-close-btn"
+                style="display:none; cursor: pointer; position: absolute; right: 16px; top: 12px; color: var(--doom-green);">[
+                X ]</span>
+            <h3
+                style="color: var(--doom-green); text-shadow: var(--doom-glow); border-bottom: 1px dashed var(--doom-green); padding-bottom: 10px; text-align: center;">
+                > ИНСТРУКЦИИ ЗА АРКАДНИЯ МОДУЛ</h3>
+            <p style="margin-top: 15px;">> <strong>ЦЕЛ:</strong> Набери 3000 точки. Извънземните се respawn-ват
+                безкрайно.</p>
+            <p>> <strong>ДВИЖЕНИЕ:</strong> ← → или A / D &nbsp;|&nbsp; <strong>СТРЕЛБА:</strong> SPACE или ↑ или W</p>
+            <p>> <strong>ПАУЗА:</strong> P &nbsp;|&nbsp; НЛО горе = +100 точки</p>
+            <p>> При победа получаваш <strong>код</strong> и се отключва <strong>ТРУДЕН</strong> режим.</p>
+            <p style="padding-left:12px;">> Падащи черешки дават +1 живот (макс 4) или +50 точки.</p>
+            <p style="padding-left:12px;">> <strong style="color:#ff4444;">БОС ФАЙТ</strong> — голямо извънземно с
+                health bar и фазови атаки.</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="invaders-start-btn">[ СТАРТИРАЙ ]</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="tick-audio" src="tick.mp3"></audio>
+    <audio id="hover-audio" src="tick.mp3"></audio>
+    <audio id="data-sound" src="Audio files/data.MP3"></audio>
+    <audio id="bg-music" src="Audio files/music.MP3" loop></audio>
+    <audio id="symbols-drop" src="Audio files/Symbols_drop.MP3"></audio>
+    <audio id="text-os-start" src="Audio files/Text_OS_Start.MP3"></audio>
+    <audio id="text-os-end" src="Audio files/Text_OS_End.MP3"></audio>
+    <audio id="thumbs-up-sound" src="Audio files/thumps_up.MP3"></audio>
+    <audio id="screen-shake-sound" src="Audio files/first_screen_shake.MP3"></audio>
+    <audio id="access-granted-sound" src="Audio files/Access_granted.MP3"></audio>
+    <audio id="access-denied-sound" src="Audio files/Access_denied.mp3"></audio>
+    <audio id="menu-change-sound" src="Audio files/menu_change.mp3"></audio>
+    <audio id="menu-change-2-sound" src="Audio files/menu_change_2.mp3"></audio>
+    <!-- Invaders game audio -->
+    <audio id="inv-pew" src="Audio files/pew.MP3" preload="auto"></audio>
+    <audio id="inv-food" src="Audio files/food.MP3" preload="auto"></audio>
+    <audio id="inv-normal-theme" src="Audio files/normal_theme.mp3" loop preload="auto"></audio>
+    <audio id="inv-hard-theme" src="Audio files/hard_theme.mp3" loop preload="auto"></audio>
+    <audio id="inv-boss-theme-1" src="Audio files/boss_theme_1.mp3" loop preload="auto"></audio>
+    <audio id="inv-boss-theme-2" src="Audio files/boss_theme_2.MP3" loop preload="auto"></audio>
+
+    <audio id="radio-classical" src="Audio files/Classical_Radio.mp3" preload="none"></audio>
+    <audio id="radio-galaxy" src="Audio files/Galaxy_News_Radio.mp3" preload="none"></audio>
+    <audio id="radio-mojave" src="Audio files/Mojave_Radio_Station.mp3" preload="none"></audio>
+    <audio id="radio-newvegas" src="Audio files/Radio_New_Vegas.mp3" preload="none"></audio>
+    <audio id="radio-shrimp" src="Audio files/Shrimp_Station.mp3" preload="none"></audio>
+    <audio id="radio-pra" src="Audio files/People's_Republic_of_America.MP3" preload="none"></audio>
+    <audio id="radio-diamondcity" src="Audio files/Diamond_City_Radio.MP3" preload="none"></audio>
+    <audio id="radio-wernher" src="Audio files/Wernher's_distress_signal.ogg" preload="none"></audio>
+    <audio id="radio-outcast" src="Audio files/Outcast_distress_signal.ogg" preload="none"></audio>
+    <audio id="keyboard-click-sound" src="Audio files/keyboard_click.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
