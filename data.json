@@ -75,21 +75,20 @@
         {
             "id": "III",
             "type": "invaders",
-            "a": "VEJB",
-            "code": "VEJB",
+            "a": "UA==",
+            "code": "UA==",
             "err": "ГРЕШЕН ОТГОВОР."
         },
         {
             "id": "IV",
-            "type": "standard",
-            "q": "VEJB",
-            "a": "VEJB",
-            "code": "VEJB",
+            "type": "machinarium",
+            "a": "TUFDSElOQVJJVU0=",
+            "code": "Tw==",
             "err": "ГРЕШЕН ОТГОВОР."
         },
         {
             "id": "V",
-            "type": "standard",
+            "type": "bolts",
             "q": "VEJB",
             "a": "VEJB",
             "code": "VEJB",

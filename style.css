@@ -565,6 +565,668 @@ body::after {
 }
 
 /* -------------------------------------
+   БОС ПОБЕДА — АУДИО ПОСЛАНИЕ
+-------------------------------------- */
+#boss-victory-modal {
+    max-width: 420px;
+    z-index: 450;
+}
+
+.inv-caps-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: -12px 0 16px;
+    color: #ffcc33;
+    text-shadow: 0 0 6px rgba(255, 204, 51, 0.6);
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+.inv-caps-icon {
+    width: 16px;
+    height: 16px;
+    color: #ffcc33;
+}
+
+.inv-restart-btn.inv-skin-btn {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inv-skin-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--doom-green);
+}
+
+.inv-achievements-icon {
+    width: 24px;
+    height: 24px;
+    color: #ffcc33;
+}
+
+#achievements-modal {
+    max-width: 900px;
+    z-index: 460;
+}
+
+.achievements-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 22px 22px 20px;
+    gap: 4px;
+}
+
+.achievements-title {
+    color: #ffcc33;
+    text-shadow: 0 0 8px rgba(255, 204, 51, 0.6);
+    letter-spacing: 1px;
+    margin: 0 0 2px;
+    font-size: 1.3rem;
+}
+
+.achievements-count {
+    color: var(--doom-dim, #4a8a4a);
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+}
+
+.achievements-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
+}
+
+.achievement-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--doom-green);
+    padding: 10px 14px;
+    text-align: left;
+}
+
+.achievement-row.locked {
+    border-color: #444;
+    opacity: 0.55;
+}
+
+.achievement-icon {
+    width: 30px;
+    height: 30px;
+    flex: none;
+    color: #ffcc33;
+}
+
+.achievement-row.locked .achievement-icon {
+    color: #666;
+}
+
+.achievement-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.achievement-name {
+    color: var(--doom-green);
+    text-shadow: var(--doom-glow);
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.achievement-row.locked .achievement-name {
+    color: #999;
+    text-shadow: none;
+}
+
+.achievement-desc {
+    color: var(--doom-dim, #4a8a4a);
+    font-size: 0.82rem;
+}
+
+/* RGB ефект за много редки постижения — анимира само рамката/сиянието/иконата и
+   цвета на текста (реални цветове, не filter), затова емоджитата в името остават
+   недокоснати, тъй като emoji глифовете не реагират на CSS color/border/box-shadow. */
+@keyframes achievement-rgb-border {
+    0% {
+        border-color: hsl(0, 100%, 55%);
+        box-shadow: 0 0 12px hsl(0, 100%, 55%);
+    }
+
+    8.33% {
+        border-color: hsl(30, 100%, 55%);
+        box-shadow: 0 0 12px hsl(30, 100%, 55%);
+    }
+
+    16.66% {
+        border-color: hsl(60, 100%, 55%);
+        box-shadow: 0 0 12px hsl(60, 100%, 55%);
+    }
+
+    25% {
+        border-color: hsl(90, 100%, 55%);
+        box-shadow: 0 0 12px hsl(90, 100%, 55%);
+    }
+
+    33.33% {
+        border-color: hsl(120, 100%, 55%);
+        box-shadow: 0 0 12px hsl(120, 100%, 55%);
+    }
+
+    41.66% {
+        border-color: hsl(150, 100%, 55%);
+        box-shadow: 0 0 12px hsl(150, 100%, 55%);
+    }
+
+    50% {
+        border-color: hsl(180, 100%, 55%);
+        box-shadow: 0 0 12px hsl(180, 100%, 55%);
+    }
+
+    58.33% {
+        border-color: hsl(210, 100%, 55%);
+        box-shadow: 0 0 12px hsl(210, 100%, 55%);
+    }
+
+    66.66% {
+        border-color: hsl(240, 100%, 55%);
+        box-shadow: 0 0 12px hsl(240, 100%, 55%);
+    }
+
+    75% {
+        border-color: hsl(270, 100%, 55%);
+        box-shadow: 0 0 12px hsl(270, 100%, 55%);
+    }
+
+    83.33% {
+        border-color: hsl(300, 100%, 55%);
+        box-shadow: 0 0 12px hsl(300, 100%, 55%);
+    }
+
+    91.66% {
+        border-color: hsl(330, 100%, 55%);
+        box-shadow: 0 0 12px hsl(330, 100%, 55%);
+    }
+
+    100% {
+        border-color: hsl(360, 100%, 55%);
+        box-shadow: 0 0 12px hsl(360, 100%, 55%);
+    }
+}
+
+@keyframes achievement-rgb-text {
+    0% {
+        color: hsl(0, 100%, 62%);
+    }
+
+    8.33% {
+        color: hsl(30, 100%, 62%);
+    }
+
+    16.66% {
+        color: hsl(60, 100%, 62%);
+    }
+
+    25% {
+        color: hsl(90, 100%, 62%);
+    }
+
+    33.33% {
+        color: hsl(120, 100%, 62%);
+    }
+
+    41.66% {
+        color: hsl(150, 100%, 62%);
+    }
+
+    50% {
+        color: hsl(180, 100%, 62%);
+    }
+
+    58.33% {
+        color: hsl(210, 100%, 62%);
+    }
+
+    66.66% {
+        color: hsl(240, 100%, 62%);
+    }
+
+    75% {
+        color: hsl(270, 100%, 62%);
+    }
+
+    83.33% {
+        color: hsl(300, 100%, 62%);
+    }
+
+    91.66% {
+        color: hsl(330, 100%, 62%);
+    }
+
+    100% {
+        color: hsl(360, 100%, 62%);
+    }
+}
+
+.achievement-row.rare-rgb:not(.locked) {
+    animation: achievement-rgb-border 8s linear infinite;
+}
+
+.achievement-row.rare-rgb:not(.locked) .achievement-icon {
+    animation: achievement-rgb-text 8s linear infinite;
+}
+
+.achievement-row.rare-rgb:not(.locked) .achievement-name {
+    text-shadow: none;
+    animation: achievement-rgb-text 8s linear infinite;
+}
+
+.inv-achievement-toast {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-30px);
+    background: rgba(0, 5, 0, 0.96);
+    border: 1px solid #ffcc33;
+    box-shadow: 0 0 14px rgba(255, 204, 51, 0.55);
+    padding: 12px 22px;
+    z-index: 9999;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.inv-achievement-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.inv-ach-toast-title {
+    color: #ffcc33;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(255, 204, 51, 0.6);
+}
+
+.inv-ach-toast-name {
+    color: var(--doom-green);
+    text-shadow: var(--doom-glow);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+#skin-shop-modal {
+    max-width: 540px;
+    z-index: 460;
+}
+
+/* ── НУЛИРАНЕ НА ПРОГРЕСА ─────────────────────────────────── */
+.inv-reset-open-btn {
+    color: #ff6666;
+    border-color: #ff6666;
+    box-shadow: 0 0 6px #ff6666;
+}
+
+.inv-reset-open-btn:hover {
+    background: #ff6666;
+    color: #000;
+}
+
+#reset-options-modal {
+    max-width: 520px;
+    z-index: 470;
+}
+
+.reset-options-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 22px 22px 20px;
+    gap: 4px;
+}
+
+.reset-options-title {
+    color: var(--error-red);
+    text-shadow: 0 0 8px var(--error-red);
+    letter-spacing: 1px;
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.reset-options-warning {
+    color: var(--error-red);
+    font-size: 0.82rem;
+    text-align: center;
+    margin: 0 0 16px;
+    letter-spacing: 0.3px;
+}
+
+.reset-options-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reset-option-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    background: transparent;
+    border: 1px solid var(--doom-green);
+    color: var(--doom-green);
+    font-family: inherit;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.reset-option-btn:hover {
+    background: rgba(255, 68, 68, 0.12);
+    border-color: var(--error-red);
+}
+
+.reset-option-title {
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    font-size: 0.95rem;
+}
+
+.reset-option-btn:hover .reset-option-title {
+    color: var(--error-red);
+    text-shadow: 0 0 6px var(--error-red);
+}
+
+.reset-option-desc {
+    color: var(--doom-dim, #4a8a4a);
+    font-size: 0.78rem;
+}
+
+.reset-confirm-box {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+}
+
+.reset-confirm-title {
+    color: var(--error-red);
+    text-shadow: 0 0 6px var(--error-red);
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.reset-confirm-sub {
+    color: var(--doom-green);
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+.reset-confirm-removes {
+    margin: 0 0 18px;
+    padding-left: 20px;
+    color: var(--doom-dim, #4a8a4a);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.reset-confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+}
+
+.reset-confirm-yes-btn {
+    color: #000 !important;
+    background: var(--error-red) !important;
+    border-color: var(--error-red) !important;
+}
+
+.skin-shop-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 20px 16px 18px;
+    gap: 18px;
+}
+
+.skin-shop-caps-label {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    color: #ffcc33;
+    text-shadow: 0 0 6px rgba(255, 204, 51, 0.6);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+}
+
+.skin-shop-preview-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    margin-top: 14px;
+}
+
+.skin-arrow-btn {
+    background: transparent;
+    border: none;
+    color: var(--doom-green);
+    font-size: 2.2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 6px 12px;
+    text-shadow: var(--doom-glow);
+    transition: 0.15s;
+}
+
+.skin-arrow-btn:hover {
+    color: #fff;
+    transform: scale(1.15);
+}
+
+.skin-preview-ship {
+    width: 190px;
+    height: 110px;
+    color: var(--doom-green);
+    filter: drop-shadow(0 0 10px currentColor);
+}
+
+.skin-name-label {
+    color: var(--doom-green);
+    text-shadow: var(--doom-glow);
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+}
+
+.skin-shop-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 340px;
+}
+
+.skin-shop-btn {
+    width: 100%;
+    padding: 16px 18px;
+    background: transparent;
+    border: 1px solid var(--doom-green);
+    color: var(--doom-green);
+    box-shadow: 0 0 6px var(--doom-green);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.15s;
+}
+
+.skin-shop-btn:hover:not(:disabled) {
+    background: var(--doom-green);
+    color: #000;
+}
+
+.skin-shop-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.skin-shop-btn.skin-shop-btn-owned {
+    color: #ffcc33;
+    border-color: #ffcc33;
+    box-shadow: 0 0 6px #ffcc33;
+    cursor: default;
+}
+
+.skin-shop-btn.skin-shop-btn-locked {
+    color: var(--error-red);
+    border-color: var(--error-red);
+}
+
+.skin-shop-btn.skin-shop-btn-locked:hover {
+    background: transparent;
+}
+
+#skin-use-lock {
+    width: 24px;
+    height: 24px;
+}
+
+.boss-victory-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 10px 6px 6px;
+    gap: 16px;
+}
+
+.boss-victory-close {
+    position: absolute;
+    right: 4px;
+    top: -2px;
+    cursor: pointer;
+    color: var(--doom-green);
+    font-size: 0.9rem;
+}
+
+.boss-victory-close:hover {
+    color: var(--error-red);
+    text-shadow: 0 0 10px var(--error-red);
+}
+
+.boss-victory-emblem {
+    position: relative;
+    width: 170px;
+    height: 170px;
+    filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.6));
+}
+
+.boss-victory-wreath-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.boss-victory-bust-img {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44%;
+    height: 44%;
+    object-fit: contain;
+}
+
+.boss-victory-wave-box {
+    border: 1px solid rgba(42, 255, 0, 0.4);
+    background: rgba(0, 10, 0, 0.3);
+    box-shadow: 0 0 10px rgba(42, 255, 0, 0.25);
+    width: 100%;
+    height: 90px;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+#boss-victory-wave-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.boss-victory-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    padding-bottom: 6px;
+    padding-right: 6px;
+}
+
+.boss-victory-btn {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--doom-green);
+    color: var(--doom-green);
+    cursor: pointer;
+    box-shadow: 0 0 6px var(--doom-green);
+    transition: 0.15s;
+}
+
+.boss-victory-btn:hover {
+    background: var(--doom-green);
+    color: #000;
+}
+
+.boss-victory-btn svg {
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.boss-victory-btn-main {
+    width: 72px;
+    height: 72px;
+}
+
+.boss-victory-btn-main svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* -------------------------------------
    МОДАЛНИ ПРОЗОРЦИ
 -------------------------------------- */
 .popup-modal,
@@ -1442,6 +2104,27 @@ body.shake {
     grid-row: 2;
 }
 
+.inv-intelligence-note {
+    max-width: 260px;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    color: #cc99ff;
+    text-shadow: 0 0 6px #8855ff;
+    line-height: 1.35;
+}
+
+.inv-hack-btn.inv-hack-btn-locked {
+    border-color: #666;
+    color: #888;
+    box-shadow: none;
+    opacity: 0.6;
+}
+
+.inv-hack-btn.inv-hack-btn-locked:hover {
+    background: transparent;
+    color: #888;
+}
+
 .inv-hack-btn {
     display: flex;
     align-items: center;
@@ -1609,4 +2292,637 @@ body.shake {
 .inv-mobile-btn:active {
     background: var(--doom-green);
     color: #000;
+}
+
+/* -------------------------------------
+   MACHINARIUM ПЪЗЕЛ (СЕКТОР IV)
+-------------------------------------- */
+#question-modal.machinarium-modal-size {
+    max-width: 860px;
+    width: 96vw;
+}
+
+.machinarium-header-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px dashed var(--doom-green);
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+}
+
+.machinarium-level-row {
+    text-align: center;
+    color: var(--doom-green);
+    text-shadow: var(--doom-glow);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.machinarium-panel-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0;
+}
+
+.machinarium-svg {
+    width: 100%;
+    max-width: 740px;
+    height: auto;
+}
+
+.machinarium-panel-bg {
+    fill: #0b110a;
+    stroke: var(--doom-green);
+    stroke-width: 2;
+    stroke-linejoin: round;
+}
+
+.machinarium-rivet {
+    fill: #222;
+    stroke: #666;
+    stroke-width: 1;
+}
+
+.machinarium-track {
+    fill: none;
+    stroke: rgba(42, 255, 0, 0.5);
+    stroke-width: 4;
+}
+
+.machinarium-target-tri {
+    fill: rgba(42, 255, 0, 0.26);
+    stroke: rgba(42, 255, 0, 0.85);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+}
+
+.machinarium-zone-layer {
+    opacity: 0.16;
+}
+
+.machinarium-center-zone {
+    fill: #2aff00;
+}
+
+.machinarium-center-dot {
+    fill: #39ff14;
+    filter: drop-shadow(0 0 4px #39ff14);
+}
+
+.machinarium-socket {
+    fill: #05080a;
+    stroke: rgba(42, 255, 0, 0.6);
+    stroke-width: 2;
+}
+
+.machinarium-dot {
+    stroke: #000;
+    stroke-width: 2;
+}
+
+.machinarium-dot.green {
+    fill: #39ff14;
+    filter: drop-shadow(0 0 4px #39ff14);
+}
+
+.machinarium-dot.red {
+    fill: #ff2a2a;
+    filter: drop-shadow(0 0 4px #ff2a2a);
+}
+
+.machinarium-arrow-group {
+    cursor: pointer;
+}
+
+.machinarium-arrow-hit {
+    fill: none;
+    stroke: transparent;
+    stroke-width: 40;
+    stroke-linecap: round;
+}
+
+.machinarium-arrow-line {
+    fill: none;
+    stroke: var(--doom-green);
+    stroke-width: 6;
+    stroke-linecap: round;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.machinarium-arrow-head {
+    fill: var(--doom-green);
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+.machinarium-arrow-group:hover .machinarium-arrow-line,
+.machinarium-arrow-group:hover .machinarium-arrow-head {
+    opacity: 1;
+    stroke: #fff;
+    fill: #fff;
+    filter: drop-shadow(0 0 5px var(--doom-green));
+}
+
+.machinarium-arrow-group:hover .machinarium-arrow-head {
+    stroke: none;
+}
+
+.machinarium-arrow-group:hover .machinarium-arrow-line {
+    fill: none;
+}
+
+#machinarium-msg {
+    color: var(--doom-green);
+    font-size: 1.3rem;
+    font-weight: bold;
+    min-height: 30px;
+    text-align: center;
+    text-shadow: var(--doom-glow);
+    margin: 12px 0 4px;
+}
+
+#machinarium-msg.machinarium-msg-progress {
+    font-size: 1rem;
+    color: #ffbe3d;
+    text-shadow: 0 0 6px #ffbe3d;
+}
+
+/* -------------------------------------
+   ГАЙКИ И ВИНТОВЕ (СЕКТОР V)
+-------------------------------------- */
+.bolts-svg {
+    width: 100%;
+    max-width: 740px;
+    height: auto;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.bolts-panel-bg {
+    fill: #0b110a;
+    stroke: var(--doom-green);
+    stroke-width: 2;
+}
+
+.bolts-grid line {
+    stroke: rgba(42, 255, 0, 0.22);
+    stroke-width: 1;
+}
+
+.bolts-cell-hit {
+    fill: transparent;
+    cursor: pointer;
+}
+
+.bolts-cell-hit:hover {
+    fill: rgba(42, 255, 0, 0.14);
+    stroke: var(--doom-green);
+    stroke-width: 1;
+}
+
+.bolts-washer {
+    fill: #0d1a0b;
+    stroke: var(--doom-green);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 3px var(--doom-green));
+}
+
+.bolts-head {
+    fill: #132a0f;
+    stroke: var(--doom-green);
+    stroke-width: 2;
+}
+
+.bolts-slot {
+    fill: var(--doom-green);
+}
+
+.bolts-hex {
+    fill: #2a1d05;
+    stroke: #ffbe3d;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 3px #ffbe3d);
+}
+
+.bolts-hole {
+    fill: #0b110a;
+    stroke: #ffbe3d;
+    stroke-width: 2;
+}
+
+.bolts-piece {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.bolts-piece.bolts-new {
+    animation: boltsDrop 0.2s ease-out;
+}
+
+@keyframes boltsDrop {
+    from {
+        transform: scale(1.2);
+        opacity: 0.2;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.bolts-piece.bolts-win {
+    animation: boltsPulse 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes boltsPulse {
+    from {
+        filter: brightness(1);
+    }
+
+    to {
+        filter: brightness(2.2) drop-shadow(0 0 8px #fff);
+    }
+}
+
+.bolts-last-marker {
+    fill: none;
+    stroke: #ffbe3d;
+    stroke-width: 1.5;
+    stroke-dasharray: 4 4;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+#bolts-msg {
+    color: var(--doom-green);
+    font-size: 1.3rem;
+    font-weight: bold;
+    min-height: 30px;
+    text-align: center;
+    text-shadow: var(--doom-glow);
+    margin: 12px 0 4px;
+}
+
+#bolts-msg.bolts-msg-info {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+#bolts-msg.bolts-msg-lose {
+    font-size: 1rem;
+    color: #ffbe3d;
+    text-shadow: 0 0 6px #ffbe3d;
+}
+
+/* Ниво 2 — стрелки */
+.bolts-piece.bolts-win .arrows-face {
+    filter: brightness(1.6);
+}
+
+#bolts-msg.bolts-msg-progress {
+    color: #ffbe3d;
+    text-shadow: 0 0 6px #ffbe3d;
+}
+
+.arrows-strip {
+    fill: #0f1a0d;
+    stroke: var(--doom-green);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 5;
+}
+
+.arrows-ring {
+    fill: #050905;
+    stroke: var(--doom-green);
+    stroke-width: 2.5;
+}
+
+.arrows-ring.arrows-empty {
+    stroke: rgba(42, 255, 0, 0.3);
+    stroke-dasharray: 5 5;
+}
+
+.arrows-face {
+    fill: #0b110a;
+    stroke: rgba(42, 255, 0, 0.5);
+    stroke-width: 1.5;
+}
+
+.arrows-up {
+    fill: var(--doom-green);
+    filter: drop-shadow(0 0 4px var(--doom-green));
+}
+
+.arrows-down {
+    fill: #ffbe3d;
+    filter: drop-shadow(0 0 4px #ffbe3d);
+}
+
+.arrows-movable {
+    cursor: pointer;
+}
+
+.arrows-movable .arrows-ring {
+    stroke-width: 4;
+    filter: drop-shadow(0 0 6px var(--doom-green));
+}
+
+.arrows-legend {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+}
+
+.arrows-down-txt {
+    fill: #ffbe3d;
+}
+
+.arrows-up-txt {
+    fill: var(--doom-green);
+}
+
+.arrows-note {
+    fill: rgba(42, 255, 0, 0.6);
+    font-size: 14px;
+}
+
+/* Детайли на панела (ниво 2) */
+.bolts-speck {
+    fill: rgba(255, 190, 61, 0.16);
+}
+
+.bolts-blotch {
+    fill: rgba(255, 150, 40, 0.05);
+}
+
+.arrows-hint {
+    fill: none;
+    stroke: rgba(42, 255, 0, 0.55);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+}
+
+.arrows-hint-digit {
+    fill: rgba(42, 255, 0, 0.55);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 18px;
+}
+
+.arrows-sketch {
+    fill: #050905;
+    stroke: rgba(42, 255, 0, 0.6);
+    stroke-width: 1.8;
+}
+
+.arrows-sketch-empty {
+    stroke-dasharray: 3 3;
+}
+
+.arrows-sketch-curve {
+    fill: none;
+    stroke: rgba(42, 255, 0, 0.6);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+}
+
+.arrows-hint-head {
+    fill: none;
+    stroke: rgba(42, 255, 0, 0.8);
+    stroke-width: 1.4;
+}
+
+/* Ниво 3 — карта с плочки */
+.slide-metal {
+    fill: #141b12;
+}
+
+.slide-scratch {
+    stroke: rgba(233, 247, 227, 0.08);
+    stroke-width: 0.8;
+}
+
+.slide-chalk path,
+.slide-chalk circle {
+    fill: none;
+    stroke: #e9f7e3;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.92;
+}
+
+.slide-chalk .slide-dot {
+    fill: #e9f7e3;
+    stroke: none;
+}
+
+.slide-chalk .slide-dashed {
+    stroke-width: 4;
+    stroke-dasharray: 2 10;
+    opacity: 0.8;
+}
+
+.slide-frame {
+    fill: #0f160d;
+    stroke: var(--doom-green);
+    stroke-width: 2;
+}
+
+.slide-well {
+    fill: #050905;
+}
+
+.slide-tile {
+    transition: transform 0.18s ease-out;
+}
+
+.slide-border {
+    fill: none;
+    stroke: #050905;
+    stroke-width: 3;
+}
+
+.slide-movable {
+    cursor: pointer;
+}
+
+.slide-movable:hover .slide-border {
+    stroke: var(--doom-green);
+    filter: drop-shadow(0 0 5px var(--doom-green));
+}
+
+.slide-solved .slide-border {
+    stroke: var(--doom-green);
+    animation: slideGlow 1.2s ease-in-out infinite alternate;
+}
+
+.slide-reveal {
+    animation: slideReveal 0.9s ease-out;
+}
+
+.slide-reveal .slide-border {
+    stroke: var(--doom-green);
+}
+
+@keyframes slideReveal {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideGlow {
+    from {
+        filter: none;
+    }
+
+    to {
+        filter: drop-shadow(0 0 7px var(--doom-green));
+    }
+}
+
+/* -------------------------------------
+   ПАРТИ РЕЖИМ
+-------------------------------------- */
+#party-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 280;
+    background: #000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#party-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 45%, rgba(255, 0, 90, 0.35), rgba(0, 0, 0, 0) 65%);
+    animation: partyHue 4s linear infinite;
+}
+
+#party-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    z-index: 2;
+    width: auto;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.1rem;
+    color: var(--doom-green);
+    text-shadow: var(--doom-glow);
+}
+
+#party-close-btn:hover {
+    color: var(--error-red);
+    text-shadow: 0 0 10px var(--error-red);
+    background: none;
+}
+
+#party-art {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(7px, 2.3vw, 20px);
+    line-height: 1.15;
+    white-space: pre;
+    background: linear-gradient(90deg, #ff0040, #ffee00, #00ff66, #00c8ff, #ff00c8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+    animation: partyHue 2.4s linear infinite;
+}
+
+#party-msg {
+    position: relative;
+    z-index: 1;
+    margin-top: 18px;
+    padding: 0 16px;
+    text-align: center;
+    color: #ffbe3d;
+    min-height: 1.4em;
+}
+
+/* Табът PARTY преливи плавно от един цвят в друг */
+#party-btn {
+    animation: partyTabFade 6s linear infinite;
+    text-shadow: 0 0 8px currentColor;
+}
+
+#party-btn:hover {
+    animation-duration: 1.5s;
+}
+
+@keyframes partyTabFade {
+    0% {
+        color: #ff2d55;
+    }
+
+    20% {
+        color: #ffbe3d;
+    }
+
+    40% {
+        color: #2aff00;
+    }
+
+    60% {
+        color: #00c8ff;
+    }
+
+    80% {
+        color: #b86bff;
+    }
+
+    100% {
+        color: #ff2d55;
+    }
+}
+
+@keyframes partyHue {
+    from {
+        filter: hue-rotate(0deg);
+    }
+
+    to {
+        filter: hue-rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    #party-glow,
+    #party-art,
+    #party-btn {
+        animation-duration: 12s;
+    }
+}
+
+/* Четири таба горе (STAT / DATA / RADIO / ПАРТИ) да се събират и на тесни екрани */
+@media (max-width: 480px) {
+    #pip-tabs {
+        gap: 10px;
+    }
+
+    .pip-tab {
+        font-size: 1.05rem;
+        letter-spacing: 0.08rem;
+        padding: 4px 6px;
+    }
 }
